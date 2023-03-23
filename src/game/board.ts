@@ -1,11 +1,22 @@
 import { Cell } from "./model/cell";
 import { Marble } from "./model/marble";
 
+export interface ReadOnlyBoard {
+    id: number;
+    getGrid(): Cell[][];
+    getCell(x: number, y: number): Cell;
+    getMarbles(): Cell[];
+    getEmptyCells(): Cell[];
+}
+
 function newCell(x: number, y: number, playable: boolean, marble: boolean = true) {
     return new Cell(x, y, playable, playable && marble ? new Marble(Math.floor(Math.random() * 1000)) : undefined)
 }
 
-export class Board {
+export class Board implements ReadOnlyBoard {
+    private static autoIncrement: number = 0
+
+    public readonly id: number;
     public static readonly width = 7;
     public static readonly height = 7;
     public static readonly size = Board.width * Board.height;
@@ -21,7 +32,7 @@ export class Board {
     ];
     
     constructor() {
-        
+        this.id = Board.autoIncrement++
     }
     
     public getGrid(): Cell[][] {
@@ -62,5 +73,15 @@ export class Board {
             }
         }
         return emptyCells;
+    }
+
+    public cloneBoard(): Board {
+        const newBoard = new Board()
+        this.getGrid().forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
+                newBoard.setCell(rowIndex, cellIndex, new Cell(cell.x, cell.y, cell.isPlayable(), cell.marble))
+            })
+        })
+        return newBoard
     }
 }

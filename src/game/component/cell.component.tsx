@@ -21,9 +21,19 @@ function CellComponent({ cellIndex, cell, possibleMoves }: CellComponentProps) {
         <div className="cell" key={cellIndex} style={{
             backgroundColor: getBackgroundColor(cell, possibleMoves)
         }}>
-            {cell.isPlayable() ? cell.marble?.getId() : ''}
+            {cell.isPlayable() ? 
+                <div 
+                    className="marbel" 
+                    style={{backgroundColor: getMarbleBackgroundColor(cell.marble?.getId())}}></div> :
+                ''}
         </div>
     )
 }
+
+function getMarbleBackgroundColor(number?: number) {
+    if (!number) return undefined
+    const hue = Math.round((number / 1000) * 360);
+    return `hsl(${hue}, 60%, 50%)`;
+  }
 
 export default CellComponent;

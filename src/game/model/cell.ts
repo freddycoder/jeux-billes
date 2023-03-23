@@ -18,7 +18,7 @@ export class Cell {
     }
 
     public hasMarble(): boolean {
-        return this.marble !== undefined;
+        return this.marble != null;
     }
 
     public emptyCell(): boolean {

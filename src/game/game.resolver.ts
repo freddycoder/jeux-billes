@@ -1,13 +1,15 @@
-import { Board } from "./board";
+import { ReadOnlyBoard } from "./board";
 import { Cell } from "./model/cell";
 import { PossibleMove } from "./model/possibleMove";
 
 export class GameResolver {
-    public static getPossibleMoves(board: Board): PossibleMove[] {
+    public static getPossibleMoves(board: ReadOnlyBoard): PossibleMove[] {
         // Possible moves are when a marble is next to another marble that is next to an empty space
 
         // Get all marbles
         let marbles = board.getMarbles();
+
+        // console.log("there is " + marbles.length + " marbles left on board " + board.id);
 
         // Get all empty cells
         let emptyCells = board.getEmptyCells();
@@ -25,10 +27,12 @@ export class GameResolver {
             }
         }
 
+        // console.log("There is " + possibleMoves.length + " posible move this turn")
+
         return possibleMoves;
     }
 
-    private static canMoveTo(board: Board, cellWithMarble: Cell, cellWithoutMarbel: Cell): boolean {
+    private static canMoveTo(board: ReadOnlyBoard, cellWithMarble: Cell, cellWithoutMarbel: Cell): boolean {
         if (cellWithMarble.hasMarble() === false) {
             throw new Error('canMoveTo - cellWithMarble must have a marble');
         }
