@@ -20,10 +20,10 @@ export const MoveHistoryComponent = ({gameNode}: MoveHistoryComponentArgs) => {
     }
 
     return (
-        <ul className="sideList">
+        <ol className="sideList">
              {
                 listLi.reverse()
              }
-        </ul>
+        </ol>
     )
 }
