@@ -50,11 +50,11 @@ export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
                 onClick={() => {
                     const newGameNode = playRandomTurn(gameNode)
                     setGameNode(newGameNode)
-            }}>Play turn</button>
+            }}>Play random turn</button>
             <button
                 onClick={() => {
                     setFindSolution(true)
-                }}>Find solution</button>
+                }}>Try find solution</button>
         </div>
     )
 }
