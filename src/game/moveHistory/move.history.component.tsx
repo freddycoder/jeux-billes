@@ -1,17 +1,18 @@
 import { GameNode } from "../game.node"
+import { MoveComponent } from "./move.component";
 
 interface MoveHistoryComponentArgs {
-    gameNode: GameNode
+    gameNode: GameNode,
+    setGameNode: Function
 }
 
-export const MoveHistoryComponent = ({gameNode}: MoveHistoryComponentArgs) => {
-
+export const MoveHistoryComponent = ({gameNode, setGameNode}: MoveHistoryComponentArgs) => {
     let gameNodeRef = gameNode;
     const listLi = []
-    if (gameNode.move) {
+    if (gameNodeRef.move) {
         do {
             listLi.push(
-                <li>move {gameNodeRef.move?.move.cellWithMarble.x} {gameNodeRef.move?.move.cellWithMarble.y} to {gameNodeRef.move?.move.emptyCell.x} {gameNodeRef.move?.move.emptyCell.y}</li>
+                <MoveComponent gameNodeRef={gameNodeRef} setGameNode={setGameNode} />
             )
             if (gameNodeRef.parent) {
                 gameNodeRef = gameNodeRef.parent
@@ -20,10 +21,10 @@ export const MoveHistoryComponent = ({gameNode}: MoveHistoryComponentArgs) => {
     }
 
     return (
-        <ol className="sideList">
+        <ul className="sideList">
              {
-                listLi.reverse()
+                listLi
              }
-        </ol>
+        </ul>
     )
 }

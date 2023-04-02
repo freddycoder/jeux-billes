@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <BoardComponent gameNode={gameNode} setGameNode={setGameNode} />
-      <MoveHistoryComponent gameNode={gameNode} />
+      <MoveHistoryComponent gameNode={gameNode} setGameNode={setGameNode} />
     </div>
   )
 }
