@@ -2,6 +2,10 @@
 
 Jeux de billes est une implémentation du jeux de billes solitaire utilisant vite.js, react.js et pnpm.
 
+## Jouer
+
+https://freddycoder.github.io/jeux-billes/
+
 ## Installation
 
 ```bash
