@@ -12,7 +12,7 @@ export const MoveHistoryComponent = ({gameNode, setGameNode}: MoveHistoryCompone
     if (gameNodeRef.move) {
         do {
             listLi.push(
-                <MoveComponent gameNodeRef={gameNodeRef} setGameNode={setGameNode} />
+                <MoveComponent key={"move-" + gameNodeRef.board.id} gameNodeRef={gameNodeRef} setGameNode={setGameNode} />
             )
             if (gameNodeRef.parent) {
                 gameNodeRef = gameNodeRef.parent
