@@ -27,7 +27,7 @@ function CellComponent({ cellIndex, cell, possibleMoves, selectedCell, setSelect
             {cell.isPlayable() ? 
                 <div
                     className="marbel" 
-                    style={{backgroundColor: getMarbleBackgroundColor(cell.marble?.getId())}}></div> :
+                    style={{backgroundImage: getMarbleBackgroundColor(cell.marble?.getId())}}></div> :
                 ''}
         </div>
     )
@@ -63,10 +63,30 @@ function onCellClick(gameNode: GameNode, setGameNode: Function, cell: Cell, poss
 }
 
 function getMarbleBackgroundColor(number?: number) {
-    if (!number) return undefined
+    if (!number) return undefined;
+  
     const hue = Math.round((number / 1000) * 360);
-    return `hsl(${hue}, 60%, 50%)`;
-}
+  
+    const canvas = document.createElement('canvas');
+    canvas.width = 100;
+    canvas.height = 1;
+    const ctx = canvas.getContext('2d')!;
+    
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    
+    // Add color stops to the gradient
+    gradient.addColorStop(0, `hsl(${hue}, 50%, 30%)`);
+    gradient.addColorStop(0.3, `hsl(${hue}, 90%, 60%)`);
+    gradient.addColorStop(0.5, `hsl(${hue}, 70%, 80%)`);
+    gradient.addColorStop(0.7, `hsl(${hue}, 80%, 60%)`);
+    gradient.addColorStop(1, `hsl(${hue}, 50%, 30%)`);
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+    return `url(${canvas.toDataURL('image/png')})`;
+}  
+  
 
 function getBorder(cell: Cell, selectedCell?: Cell) {
     if (cell.x == selectedCell?.x && cell.y == selectedCell?.y) {
