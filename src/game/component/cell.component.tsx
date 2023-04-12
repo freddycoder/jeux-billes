@@ -33,8 +33,8 @@ function CellComponent({ cellIndex, cell, possibleMoves, selectedCell, setSelect
     )
 }
 
-function isPossibleMove(cell: Cell, possibleMoves: PossibleMove[]) {
-    if (!cell.isPlayable()) {
+function isPossibleMove(cell: Cell, possibleMoves?: PossibleMove[]) {
+    if (!cell.isPlayable() || possibleMoves == null) {
         return undefined;
     }
 

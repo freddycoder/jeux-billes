@@ -9,32 +9,51 @@ export interface PossibleMoveData {
 }
 
 export class GameNode {
-    constructor(public board: Board, public parent?: GameNode, public move?: PossibleMoveData) {
+    constructor(board: Board, parent?: GameNode, move?: PossibleMoveData) {
         const possibleModes = GameResolver.getPossibleMoves(board)
-        possibleModes.forEach(move => this.possibleMoveData.push({ move }))
+        this.possibleMoveData = []
+        possibleModes.forEach(move => this.possibleMoveData?.push({ move }))
+        this.board = board
+        this.parent = parent
         this.move = move
     }
 
-    possibleMoveData: PossibleMoveData[] = [];
+    board?: Board;
+    parent?: GameNode;
+    move?: PossibleMoveData;
+    possibleMoveData?: PossibleMoveData[];
     bestScore: number = 0;
-    children: GameNode[] = [];
+    children?: GameNode[] = [];
 
     getRandomMove(): PossibleMoveData {
+        if (this.possibleMoveData == null) {
+            throw new Error("Member possibleMoveData is null wen caling getRandomMove on board " + this.board?.id)
+        }
        const unusedMove = this.possibleMoveData.filter(m => m.score === undefined);
        return unusedMove[Math.floor(Math.random() * unusedMove.length)];
     }
 
     getMove(source: Cell, destination: Cell) {
+        if (this.possibleMoveData == null) {
+            throw new Error("Member possibleMoveData is null wen caling getMove on board " + this.board?.id)
+        }
         return this.possibleMoveData.find(m => 
                 m.move.cellWithMarble.x == source.x && m.move.cellWithMarble.y == source.y &&
                 m.move.emptyCell.x == destination.x && m.move.emptyCell.y == destination.y);
     }
 
-    hasUntriedMove(): boolean {
+    hasUntriedMove(caller?: string): boolean {
+        if (this.possibleMoveData == null) {
+            throw new Error("Member possibleMoveData is null wen caling hasUntriedMove on board " + this.board?.id + ". Caller " + caller)
+        }
         return this.possibleMoveData.filter(m => m.score === undefined).length > 0
     }
 
     playRandomTurn(): PlayTurnResponse {
+        if (this.board == null) {
+            throw new ReferenceError("Member bord is null when caling playRandomTurn on board")
+        }
+
         const newBoard = this.board.cloneBoard();
 
         // get a random possible move
@@ -63,6 +82,10 @@ export class GameNode {
     }
 
     playTurn(source: Cell, destination: Cell): PlayTurnResponse {
+        if (this.board == null) {
+            throw new ReferenceError("Member bord is null when caling playTurn on board")
+        }
+
         const newBoard = this.board.cloneBoard();
 
         // get a random possible move

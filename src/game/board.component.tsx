@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Board } from "./board"
 import CellComponent from "./component/cell.component"
 import { GameNode } from "./game.node"
 import { Cell } from "./model/cell"
@@ -11,19 +10,16 @@ interface BoardComponentArgs {
 }
 
 export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
-    const [findSolution, setFindSolution] = useState(false)
     const [selectedCell, setSelectedCell] = useState<Cell | undefined>(undefined)
 
     const board = gameNode.board;
 
     const possibleMoves = gameNode.possibleMoveData
 
-    findSolutionFunc(findSolution, playRandomTurn, gameNode, setFindSolution, setGameNode)
-
     return (
         <div className="board">
             {
-                board.getGrid().map((row, rowIndex) => {
+                board?.getGrid().map((row, rowIndex) => {
                     return (
                         <div className="row" key={rowIndex}>
                             {
@@ -33,7 +29,7 @@ export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
                                             key={cellIndex} 
                                             cellIndex={cellIndex} 
                                             cell={cell} 
-                                            possibleMoves={possibleMoves.map(p => p.move)}
+                                            possibleMoves={possibleMoves?.map(p => p.move) ?? []}
                                             selectedCell={selectedCell}
                                             setSelectedCell={setSelectedCell}
                                             gameNode={gameNode}
@@ -46,14 +42,14 @@ export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
                 })
             }
             <button 
-                disabled={possibleMoves.length === 0}
+                disabled={possibleMoves?.length === 0}
                 onClick={() => {
                     const newGameNode = playRandomTurn(gameNode)
                     setGameNode(newGameNode)
             }}>Play random turn</button>
             <button
                 onClick={() => {
-                    setFindSolution(true)
+                    findSolutionFunc(playRandomTurn, gameNode, setGameNode)
                 }}>Try find solution</button>
         </div>
     )
