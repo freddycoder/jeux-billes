@@ -1,7 +1,7 @@
 import { Marble } from "./marble";
 
 export class Cell {
-    playable: boolean;
+    private playable: boolean;
     x: number;
     y: number;
     marble?: Marble;
@@ -13,6 +13,7 @@ export class Cell {
         this.marble = marbel;
     }
 
+    /** Return true no matter if the cell as a marbel or not. */
     public isPlayable(): boolean {
         return this.playable;
     }

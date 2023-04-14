@@ -25,7 +25,7 @@ export class Board implements ReadOnlyBoard {
         [newCell(0, 0, false), newCell(0, 1, false), newCell(0, 2, true), newCell(0, 3, true), newCell(0, 4, true), newCell(0, 5, false), newCell(0, 6, false)],
         [newCell(1, 0, false), newCell(1, 1, true), newCell(1, 2, true), newCell(1, 3, true), newCell(1, 4, true), newCell(1, 5, true), newCell(1, 6, false)],
         [newCell(2, 0, true), newCell(2, 1, true), newCell(2, 2, true), newCell(2, 3, true), newCell(2, 4, true), newCell(2, 5, true), newCell(2, 6, true)],
-        [newCell(3, 0, true), newCell(3, 1, true), newCell(3, 2, true), newCell(3, 3, true, false), newCell(3, 4, true), newCell(3, 5, true), newCell(3, 6, true)],
+        [newCell(3, 0, true), newCell(3, 1, true), newCell(3, 2, true), newCell(3, 3, true), newCell(3, 4, true), newCell(3, 5, true), newCell(3, 6, true)],
         [newCell(4, 0, true), newCell(4, 1, true), newCell(4, 2, true), newCell(4, 3, true), newCell(4, 4, true), newCell(4, 5, true), newCell(4, 6, true)],
         [newCell(5, 0, false), newCell(5, 1, true), newCell(5, 2, true), newCell(5, 3, true), newCell(5, 4, true), newCell(5, 5, true), newCell(5, 6, false)],
         [newCell(6, 0, false), newCell(6, 1, false), newCell(6, 2, true), newCell(6, 3, true), newCell(6, 4, true), newCell(6, 5, false), newCell(6, 6, false)]

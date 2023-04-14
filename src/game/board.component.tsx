@@ -9,14 +9,21 @@ interface BoardComponentArgs {
     setGameNode: Function
 }
 
-export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
+export const BoardComponent = ({ gameNode, setGameNode }: BoardComponentArgs) => {
     const [selectedCell, setSelectedCell] = useState<Cell | undefined>(undefined)
 
     const board = gameNode.board;
 
     const possibleMoves = gameNode.possibleMoveData
 
-    return (
+    return (<>
+        {
+            gameNode.board?.id === 0 &&
+                <div>
+                    <p>Selectionner une bille à enlever pour démarrer une partie depuis une configuration.</p>
+                    <p>Les billes avec un arrière plan vert sont des configurations ayant une solution.</p>
+                </div>
+        }
         <div className="board">
             {
                 board?.getGrid().map((row, rowIndex) => {
@@ -25,15 +32,15 @@ export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
                             {
                                 row.map((cell, cellIndex) => {
                                     return (
-                                        <CellComponent 
-                                            key={cellIndex} 
-                                            cellIndex={cellIndex} 
-                                            cell={cell} 
+                                        <CellComponent
+                                            key={cellIndex}
+                                            cellIndex={cellIndex}
+                                            cell={cell}
                                             possibleMoves={possibleMoves?.map(p => p.move) ?? []}
                                             selectedCell={selectedCell}
                                             setSelectedCell={setSelectedCell}
                                             gameNode={gameNode}
-                                            setGameNode={setGameNode} /> 
+                                            setGameNode={setGameNode} />
                                     )
                                 })
                             }
@@ -41,18 +48,19 @@ export const BoardComponent = ({gameNode, setGameNode}: BoardComponentArgs) => {
                     )
                 })
             }
-            <button 
+            <button
                 disabled={possibleMoves?.length === 0}
                 onClick={() => {
                     const newGameNode = playRandomTurn(gameNode)
                     setGameNode(newGameNode)
-            }}>Play random turn</button>
+                }}>Play random turn</button>
             <button
+                disabled={gameNode.board?.id === 0}
                 onClick={() => {
                     findSolutionFunc(playRandomTurn, gameNode, setGameNode)
                 }}>Try find solution</button>
         </div>
-    )
+    </>)
 }
 
 export default BoardComponent;

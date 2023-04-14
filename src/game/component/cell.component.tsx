@@ -1,4 +1,4 @@
-import { playTurn } from "../func/game.func";
+import { playTurn, removeMarble } from "../func/game.func";
 import { GameNode } from "../game.node";
 import { Cell } from "../model/cell";
 import { PossibleMove } from "../model/possibleMove";
@@ -20,7 +20,7 @@ function CellComponent({ cellIndex, cell, possibleMoves, selectedCell, setSelect
             className="cell" 
             onClick={() => onCellClick(gameNode, setGameNode, cell, possibleMoves, setSelectedCell, selectedCell)}
             style={{
-                backgroundColor: getBackgroundColor(cell, possibleMoves),
+                backgroundColor: getBackgroundColor(gameNode, cell, possibleMoves),
                 border: getBorder(cell, selectedCell)
             }}
         >
@@ -41,7 +41,19 @@ function isPossibleMove(cell: Cell, possibleMoves?: PossibleMove[]) {
     return possibleMoves.find(move => move.cellWithMarble.x === cell.x && move.cellWithMarble.y === cell.y) ? true : false
 }
 
-function getBackgroundColor(cell: Cell, possibleMoves: PossibleMove[]) {
+function getBackgroundColor(gameNode: GameNode, cell: Cell, possibleMoves: PossibleMove[]) {
+    if (gameNode.board?.id === 0 && cell.isPlayable()) {
+        if (
+            ((cell.x == 0 || cell.x == 6) && (cell.y == 2 || cell.y == 4)) ||
+            ((cell.x == 1 || cell.x == 5) && (cell.y == 3)) ||
+            ((cell.x == 2 || cell.x == 4) && (cell.y == 0 || cell.y == 3 || cell.y == 6)) ||
+            (cell.x == 3 && (cell.y == 1 || cell.y == 2 || cell.y == 4 || cell.y == 5))
+        ) {
+            return 'green'
+        }
+        return 'grey'
+    }
+
     const possible = isPossibleMove(cell, possibleMoves)
     
     if (possible === undefined) {
@@ -59,6 +71,13 @@ function onCellClick(gameNode: GameNode, setGameNode: Function, cell: Cell, poss
         const newGameNode = playTurn(gameNode, selectedCell, cell)
         setSelectedCell(undefined)
         setGameNode(newGameNode)
+    }
+    else if (gameNode.board?.id === 0 && cell != null) {
+        const newGameNode = removeMarble(gameNode, cell)
+        setGameNode(newGameNode)
+    }
+    else {
+        console.log("Nothing to do, " + gameNode.board?.id)
     }
 }
 

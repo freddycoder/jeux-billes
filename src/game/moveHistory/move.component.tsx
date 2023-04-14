@@ -15,7 +15,13 @@ export const MoveComponent = ({setGameNode, gameNodeRef}: MoveComponentArgs) => 
         }}
             title="Revert this move"
             onClick={() => setGameNode(gameNodeRef.parent)}>
-            move {gameNodeRef.move?.move.cellWithMarble.x} {gameNodeRef.move?.move.cellWithMarble.y} to {gameNodeRef.move?.move.emptyCell.x} {gameNodeRef.move?.move.emptyCell.y}
+            {
+                gameNodeRef.move?.move.emptyCell?.x != null
+                ? 
+                `déplacer ${gameNodeRef.move?.move.cellWithMarble.x} ${gameNodeRef.move?.move.cellWithMarble.y} vers ${gameNodeRef.move?.move.emptyCell?.x} ${gameNodeRef.move?.move.emptyCell?.y}`
+                :
+                `enlever ${gameNodeRef.move?.move.cellWithMarble.x} ${gameNodeRef.move?.move.cellWithMarble.y}`
+            }
         </li>
     )
 }

@@ -39,7 +39,7 @@ export class GameNode {
         }
         return this.possibleMoveData.find(m => 
                 m.move.cellWithMarble.x == source.x && m.move.cellWithMarble.y == source.y &&
-                m.move.emptyCell.x == destination.x && m.move.emptyCell.y == destination.y);
+                m.move.emptyCell?.x == destination.x && m.move.emptyCell.y == destination.y);
     }
 
     hasUntriedMove(caller?: string): boolean {
@@ -61,6 +61,9 @@ export class GameNode {
         const { emptyCell, cellWithMarble } = randomMove.move;
 
         // console.log("play move " + JSON.stringify(randomMove))
+        if (emptyCell == null) {
+            throw new Error("Empty cell cannot be null when a random turn is played")
+        }
 
         // update the board with the new move
         newBoard.getCell(emptyCell.x, emptyCell.y).marble = cellWithMarble.marble;
@@ -96,6 +99,9 @@ export class GameNode {
         const { emptyCell, cellWithMarble } = move.move;
 
         // console.log("play move " + JSON.stringify(randomMove))
+        if (emptyCell == null) {
+            throw new Error("Empty cell cannot be null when a turn is played")
+        }
 
         // update the board with the new move
         newBoard.getCell(emptyCell.x, emptyCell.y).marble = cellWithMarble.marble;
@@ -113,6 +119,27 @@ export class GameNode {
         return {
             newBoard: newBoard,
             moveReference: move
+        }
+    }
+
+    removeMarle(source: Cell) {
+        if (this.board == null) {
+            throw new ReferenceError("Member bord is null when caling playTurn on board")
+        }
+
+        const newBoard = this.board.cloneBoard();
+
+        const cellToRemoveMarble = newBoard.getCell(source.x, source.y);
+        if (cellToRemoveMarble.hasMarble() === false) {
+            throw new Error('removeMarle - cellToRemoveMarble muste have a marble');
+        }
+        cellToRemoveMarble.marble = undefined;
+
+        return {
+            newBoard: newBoard,
+            moveReference: {
+                move: { cellWithMarble: source } as PossibleMove,
+            } as PossibleMoveData
         }
     }
 }

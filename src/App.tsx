@@ -5,10 +5,10 @@ import { MoveHistoryComponent } from './game/moveHistory/move.history.component'
 import { GameNode } from './game/game.node'
 import { Board } from './game/board'
 
-const useStateDefaut = new GameNode(new Board())
+const initialState = new GameNode(new Board())
 
 function App() {
-  const [gameNode, setGameNode] = useState(useStateDefaut)
+  const [gameNode, setGameNode] = useState(initialState)
   return (
     <div className="App">
       <BoardComponent gameNode={gameNode} setGameNode={setGameNode} />

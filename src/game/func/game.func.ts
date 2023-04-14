@@ -8,7 +8,7 @@ export const findSolutionFunc = (playTurn: (gameNode: GameNode) => GameNode, gam
     let findSolution = true
     let setRefAfter = findSolution;
 
-    let limitIteration = 100000
+    let limitIteration = 1000000
     
     try {
         while (findSolution && limitIteration > 0) {
@@ -73,6 +73,16 @@ export function playRandomTurn(gameNode: GameNode) {
 
 export function playTurn(gameNode: GameNode, source: Cell, destination: Cell) {
     const { newBoard, moveReference } = gameNode.playTurn(source, destination)
+    if (gameNode.children == null) {
+        throw new Error("Parameter gameNode is null when calling playTurn function")
+    }
+    gameNode.children.push(new GameNode(newBoard, gameNode, moveReference))
+    return gameNode.children[gameNode.children.length - 1]
+}
+
+/** Function used before the game start. User must choose a marble to remove before stating the game */
+export function removeMarble(gameNode: GameNode, source: Cell) {
+    const { newBoard, moveReference } = gameNode.removeMarle(source);
     if (gameNode.children == null) {
         throw new Error("Parameter gameNode is null when calling playTurn function")
     }
