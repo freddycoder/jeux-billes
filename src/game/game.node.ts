@@ -25,6 +25,11 @@ export class GameNode {
     bestScore: number = 0;
     children?: GameNode[] = [];
 
+    // TODO: Calculate those value after each turn
+    marbleA?: number
+    marbleB?: number
+    marbleC?: number
+
     getRandomMove(): PossibleMoveData {
         if (this.possibleMoveData == null) {
             throw new Error("Member possibleMoveData is null wen caling getRandomMove on board " + this.board?.id)

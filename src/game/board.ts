@@ -32,9 +32,10 @@ export class Board implements ReadOnlyBoard {
     ];
     
     constructor() {
-        this.id = Board.autoIncrement++
+        this.id = Board.autoIncrement++;
+        this.updateCellLetter()
     }
-    
+
     public getGrid(): Cell[][] {
         return this.grid;
     }
@@ -77,11 +78,34 @@ export class Board implements ReadOnlyBoard {
 
     public cloneBoard(): Board {
         const newBoard = new Board()
-        this.getGrid().forEach((row, rowIndex) => {
+        this.grid.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 newBoard.setCell(rowIndex, cellIndex, new Cell(cell.x, cell.y, cell.isPlayable(), cell.marble))
             })
         })
+        newBoard.updateCellLetter()
         return newBoard
+    }
+
+    private updateCellLetter() {
+        let seq = 0;
+
+        this.grid.forEach((row, rowIndex) => {
+            row.filter(c => c.isPlayable).forEach((cell, cellIndex) => {
+                const modulo = seq++ % 3;
+
+                switch (modulo) {
+                    case 0:
+                        cell.letter = "A"
+                        break;
+                    case 1:
+                        cell.letter = "B"
+                        break;
+                    case 2:
+                        cell.letter = "C"
+                        break;
+                }
+            })
+        })
     }
 }

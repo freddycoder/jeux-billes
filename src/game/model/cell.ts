@@ -5,6 +5,7 @@ export class Cell {
     x: number;
     y: number;
     marble?: Marble;
+    letter?: "A" | "B" | "C"
 
     constructor(x: number, y: number, playable: boolean, marbel?: Marble) {
         this.playable = playable;
