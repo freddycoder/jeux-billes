@@ -16,6 +16,7 @@ export class GameNode {
         this.board = board
         this.parent = parent
         this.move = move
+        this.calculateLetters()
     }
 
     board?: Board;
@@ -25,10 +26,10 @@ export class GameNode {
     bestScore: number = 0;
     children?: GameNode[] = [];
 
-    // TODO: Calculate those value after each turn
-    marbleA?: number
-    marbleB?: number
-    marbleC?: number
+    // Those vaue are calculated after each turn
+    marbleA: number = 0
+    marbleB: number = 0
+    marbleC: number = 0
 
     getRandomMove(): PossibleMoveData {
         if (this.possibleMoveData == null) {
@@ -146,6 +147,30 @@ export class GameNode {
                 move: { cellWithMarble: source } as PossibleMove,
             } as PossibleMoveData
         }
+    }
+
+    /**This function is called inside the constructeur. Board should not be mutated after creating a game node */
+    private calculateLetters() {
+        this.marbleA = 0;
+        this.marbleB = 0;
+        this.marbleC = 0;
+        this.board?.getGrid().forEach(row => {
+            row.forEach(cell => {
+                if (cell.hasMarble()) {
+                    switch (cell.letter) {
+                        case "A":
+                            this.marbleA += 1
+                            break
+                        case "B":
+                            this.marbleB += 1
+                            break
+                        case "C":
+                            this.marbleC += 1
+                            break
+                    }
+                }
+            })
+        })
     }
 }
 

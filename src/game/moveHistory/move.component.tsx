@@ -18,9 +18,9 @@ export const MoveComponent = ({setGameNode, gameNodeRef}: MoveComponentArgs) => 
             {
                 gameNodeRef.move?.move.emptyCell?.x != null
                 ? 
-                `déplacer ${gameNodeRef.move?.move.cellWithMarble.x} ${gameNodeRef.move?.move.cellWithMarble.y} vers ${gameNodeRef.move?.move.emptyCell?.x} ${gameNodeRef.move?.move.emptyCell?.y}`
+                `déplacer ${gameNodeRef.move?.move.cellWithMarble.x} ${gameNodeRef.move?.move.cellWithMarble.y} vers ${gameNodeRef.move?.move.emptyCell?.x} ${gameNodeRef.move?.move.emptyCell?.y} | A ${gameNodeRef.marbleA} B ${gameNodeRef.marbleB} C ${gameNodeRef.marbleC}`
                 :
-                `enlever ${gameNodeRef.move?.move.cellWithMarble.x} ${gameNodeRef.move?.move.cellWithMarble.y}`
+                `enlever ${gameNodeRef.move?.move.cellWithMarble.x} ${gameNodeRef.move?.move.cellWithMarble.y} | A ${gameNodeRef.marbleA} B ${gameNodeRef.marbleB} C ${gameNodeRef.marbleC}`
             }
         </li>
     )
