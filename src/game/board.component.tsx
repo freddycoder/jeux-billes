@@ -20,7 +20,7 @@ export const BoardComponent = ({ gameNode, setGameNode }: BoardComponentArgs) =>
         {
             gameNode.board?.id === 0 &&
                 <div>
-                    <p>Selectionner une bille à enlever pour démarrer une partie depuis une configuration.</p>
+                    <p>Selectionner une bille à enlever pour démarrer une partie.</p>
                     <p>Les billes avec un arrière plan vert sont des configurations ayant une solution.</p>
                 </div>
         }
@@ -53,12 +53,12 @@ export const BoardComponent = ({ gameNode, setGameNode }: BoardComponentArgs) =>
                 onClick={() => {
                     const newGameNode = playRandomTurn(gameNode)
                     setGameNode(newGameNode)
-                }}>Play random turn</button>
+                }}>Jouer un tour au hasard</button>
             <button
                 disabled={gameNode.board?.id === 0}
                 onClick={() => {
                     findSolutionFunc(playRandomTurn, gameNode, setGameNode)
-                }}>Try find solution</button>
+                }}>Essayer de trouver une solution</button>
         </div>
     </>)
 }

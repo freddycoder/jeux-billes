@@ -22,7 +22,8 @@ function CellComponent({ cellIndex, cell, possibleMoves, selectedCell, setSelect
             onClick={() => onCellClick(gameNode, setGameNode, cell, possibleMoves, setSelectedCell, selectedCell)}
             style={{
                 backgroundColor: getCellBackgroundColor(gameNode, cell, possibleMoves),
-                border: getBorder(cell, selectedCell)
+                border: getBorder(cell, selectedCell),
+                borderRadius: getBorderRadius(cell)
             }}
         >
             {cell.isPlayable() ? 
@@ -95,6 +96,22 @@ function getBorder(cell: Cell, selectedCell?: Cell) {
         return "1px solid white"
     }
     return undefined
+}
+
+function getBorderRadius(cell: Cell) {
+    if (cell.x == 0 && cell.y == 0) {
+        return "100% 0 0 0"
+    }
+    if (cell.x == 0 && cell.y == 6) {
+        return "0 100% 0 0"
+    }
+    if (cell.x == 6 && cell.y == 0) {
+        return "0 0 0 100%"
+    }
+    if (cell.x == 6 && cell.y == 6) {
+        return "0 0 100% 0"
+    }
+    return "0"
 }
 
 export default CellComponent;
