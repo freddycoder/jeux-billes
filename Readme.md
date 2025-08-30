@@ -15,7 +15,7 @@ pnpm install
 ## Lancement
 
 ```bash
-pnpm run dev
+pnpm start
 ```
 
 ## Déploiement
